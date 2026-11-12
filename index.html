@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metro Marché | 100% Seed Oil-Free Café, Market Table &amp; Corporate Catering | Midtown NYC</title>
+  <meta name="description" content="Metro Marché is Midtown Manhattan's premier 100% seed oil-free café, market table & corporate catering service at 30 W 57th St near Central Park. Cooked exclusively with EVOO and avocado oil.">
+  
+  <meta property="og:title" content="Metro Marché | 100% Seed Oil Free Café &amp; Catering, Midtown NYC">
+  <meta property="og:description" content="Chef-crafted salads, warm grain bowls, hot market plates, and corporate catering made 100% seed oil-free at 30 W 57th St, Midtown Manhattan.">
+  <meta property="og:image" content="/assets/images/hero-salad.webp">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/assets/images/favicon.jpg" type="image/x-icon">
+
+  <!-- Google Fonts: Playfair Display + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN Configured with Exact Logo Color Pattern -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bronze: '#896A39',       // Exact Antique Gold / Bronze from Logo
+              bronzeHover: '#6D5329',
+              bronzeLight: '#F7F1E6',
+              noir: '#1B222C',          // Exact Midnight Charcoal from Logo
+              noirDark: '#10161D',
+              slate: '#69707B',         // Exact Parisian Slate from Logo
+              celadon: '#9BC3CA',       // Fresh Celadon Accent
+              terracotta: '#DF9F83',    // Warm Terracotta
+              cream: '#FAF8F5',         // Warm French Cream Background
+              oat: '#F3ECE1'            // Warm Parchment Oat
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="bg-[#FAF8F5] text-brand-noir antialiased selection:bg-brand-bronze selection:text-white">
+
+  <!-- VUE 3 APPLICATION ROOT MOUNT -->
+  <div id="app"></div>
+
+  <!-- VUE 3 APPLICATION ENTRYPOINT -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
