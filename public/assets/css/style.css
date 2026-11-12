@@ -1,0 +1,176 @@
+/* Metro Marché — Vue 3 Redesign Styling
+   Strictly following the Metro Marché Logo Color Pattern:
+   - Antique Bronze Gold: #896A39
+   - Deep Midnight Charcoal: #1B222C
+   - Parisian Slate: #69707B
+   - French Celadon Sage: #9BC3CA
+   - Warm Terracotta: #DF9F83 / #F4A074
+   - Warm French Cream: #FAF8F5 / #F3ECE1
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --color-bronze: #896A39;
+  --color-bronze-dark: #6D5329;
+  --color-bronze-light: #F7F1E6;
+  --color-charcoal: #1B222C;
+  --color-charcoal-dark: #10161D;
+  --color-slate: #69707B;
+  --color-celadon: #9BC3CA;
+  --color-terracotta: #DF9F83;
+  --color-cream: #FAF8F5;
+  --color-oat: #F3ECE1;
+  --color-border: #E5E8EB;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: var(--color-charcoal);
+  background-color: var(--color-cream);
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Custom Gradients */
+.bg-noir-gradient {
+  background: linear-gradient(135deg, #10161D 0%, #1B222C 50%, #242D3A 100%);
+}
+
+.bg-bronze-gradient {
+  background: linear-gradient(135deg, #896A39 0%, #A48047 50%, #896A39 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #D4AF37 0%, #F3DF9A 50%, #C59B27 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism */
+.bg-glass {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.bg-glass-dark {
+  background: rgba(27, 34, 44, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Soft Shadows */
+.shadow-soft {
+  box-shadow: 0 10px 30px -10px rgba(27, 34, 44, 0.08), 0 4px 12px -2px rgba(27, 34, 44, 0.04);
+}
+
+.shadow-card-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.shadow-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(137, 106, 57, 0.18), 0 8px 16px -4px rgba(27, 34, 44, 0.08);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F3ECE1;
+}
+::-webkit-scrollbar-thumb {
+  background: #896A39;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6D5329;
+}
+
+/* Dietary & Quality Badges */
+.badge-seedoil {
+  background-color: #F7F1E6;
+  color: #896A39;
+  border: 1px solid #E6D8BE;
+}
+
+.badge-gf {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.badge-vegan {
+  background-color: #F0FDF4;
+  color: #166534;
+  border: 1px solid #BBF7D0;
+}
+
+.badge-protein {
+  background-color: #F0F7F9;
+  color: #2F6575;
+  border: 1px solid #C5E0E7;
+}
+
+/* Float Animation */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.12);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Vue Transitions */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.scale-enter-active, .scale-leave-active {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scale-enter-from, .scale-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
