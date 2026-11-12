@@ -14,7 +14,7 @@
           <span class="hidden md:inline text-stone-600">|</span>
           <span class="hidden md:inline-flex items-center gap-1.5 text-stone-300 text-xs">
             <ShieldCheck class="w-3.5 h-3.5 text-[#896A39]" />
-            <span>100% Seed Oil-Free • Cooked Exclusively with Pure EVOO &amp; Avocado Oil</span>
+            <span>Seed Oil Free Cafe &amp; Catering • Midtown NYC</span>
           </span>
         </div>
 
