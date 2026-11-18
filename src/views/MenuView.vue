@@ -1,164 +1,179 @@
 <template>
-  <div class="bg-[#FAF8F5] min-h-screen">
-    <!-- Menu Page Header Banner -->
-    <section class="bg-[#10161D] text-white py-16 sm:py-20 relative overflow-hidden">
-      <div class="absolute inset-0 opacity-20">
-        <img src="/assets/images/hero-salad.webp" alt="Metro Marché Fresh Menu" class="w-full h-full object-cover" />
-      </div>
-      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#896A39]/20 text-amber-200 border border-[#896A39]/40 text-xs font-bold uppercase tracking-wider">
-          <Sparkles class="w-3.5 h-3.5" />
-          <span>100% Seed Oil-Free Menu</span>
-        </div>
-        <h1 class="text-4xl sm:text-5xl font-serif font-bold text-white">
-          Our Full Artisan Menu
+  <div class="bg-[#F4ECDD] min-h-screen py-8 sm:py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      
+      <!-- Page Header -->
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="inline-block px-3.5 py-1 bg-[#1E3A2B] text-[#C9A55C] font-mono text-xs font-bold uppercase tracking-widest rounded-full">
+          100% Seed Oil Free Kitchen
+        </span>
+        <h1 class="font-display font-black text-5xl sm:text-7xl uppercase tracking-tight text-[#1B1812] leading-[0.9]">
+          The artisan <span class="font-serif italic font-normal text-[#DF4A2A]">menu</span>
         </h1>
-        <p class="text-stone-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-          Cooked exclusively with cold-pressed Extra Virgin Olive Oil and pure Avocado Oil. Prepared daily from scratch at 30 W 57th St, Midtown NYC.
+        <p class="text-sm sm:text-base text-[#1B1812]/80 leading-relaxed max-w-2xl mx-auto font-sans">
+          Cooked exclusively with cold-pressed Extra Virgin Olive Oil and pure Avocado Oil. 112+ items prepared daily from scratch at 30 W 57th St, Midtown NYC.
         </p>
 
-        <!-- Search Bar -->
-        <div class="pt-4 max-w-xl mx-auto">
+        <!-- Live Search Bar -->
+        <div class="pt-2 max-w-xl mx-auto">
           <div class="relative">
-            <Search class="w-5 h-5 text-stone-400 absolute left-4 top-1/2 -translate-y-1/2" />
-            <input v-model="searchQuery" type="text" placeholder="Search menu (e.g. steak, salmon, matcha, bowl, GF)..."
-                   class="w-full pl-12 pr-4 py-3.5 rounded-full bg-white text-stone-900 text-sm border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#896A39] shadow-md" />
-            <button v-if="searchQuery" @click="searchQuery = ''" class="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 text-xs font-bold">
-              Clear
+            <input 
+              v-model="searchQuery" 
+              type="text" 
+              placeholder="Search dishes (e.g. shrimp, steak, salmon, matcha, gluten-free)..."
+              class="w-full pl-6 pr-24 py-3.5 rounded-full bg-white text-[#1B1812] text-xs font-mono border-2 border-[#1B1812] focus:outline-none focus:ring-2 focus:ring-[#DF4A2A] shadow-md"
+            />
+            <button 
+              v-if="searchQuery" 
+              @click="searchQuery = ''" 
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-mono font-bold text-[#DF4A2A] hover:underline"
+            >
+              Clear ×
             </button>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Filters Bar (Sticky) -->
-    <div class="sticky top-20 z-30 bg-white/95 backdrop-blur-md border-b border-[#F3ECE1] py-4 shadow-sm">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
-        <!-- Category Tabs -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          <button v-for="cat in categories" :key="cat.id"
-                  @click="activeCategory = cat.id"
-                  class="whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition shadow-sm"
-                  :class="activeCategory === cat.id ? 'bg-[#1B222C] text-white shadow-md' : 'bg-[#FAF8F5] text-stone-700 hover:bg-stone-200'">
+      <!-- Category Filter Pills Bar (Sticky) -->
+      <div class="sticky top-20 z-30 bg-[#F4ECDD]/95 backdrop-blur-md py-3 border-y border-[#1B1812]/10 space-y-3">
+        <!-- Categories -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+          <button 
+            v-for="cat in categories" 
+            :key="cat.id"
+            @click="activeCategory = cat.id"
+            class="whitespace-nowrap px-4 py-2 rounded-full text-xs font-display uppercase tracking-wider font-bold transition shadow-xs"
+            :class="activeCategory === cat.id ? 'bg-[#1B1812] text-[#F4ECDD] shadow-md' : 'bg-white text-[#1B1812] border border-[#1B1812]/15 hover:border-[#1B1812]'"
+          >
             {{ cat.name }} ({{ countCategory(cat.id) }})
           </button>
         </div>
 
-        <!-- Dietary Pills Filter -->
-        <div class="flex flex-wrap items-center gap-2 text-xs">
-          <span class="text-stone-500 font-bold uppercase text-[11px]">Dietary:</span>
-          <button v-for="filter in dietOptions" :key="filter.key"
-                  @click="toggleDiet(filter.key)"
-                  class="px-3 py-1 rounded-full border text-xs font-semibold transition"
-                  :class="activeDiets.includes(filter.key) ? 'bg-[#896A39] text-white border-[#896A39]' : 'bg-white border-stone-300 text-stone-700 hover:border-[#896A39]'">
-            {{ filter.label }}
+        <!-- Dietary Checkboxes -->
+        <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+          <span class="text-[#1B1812]/60 font-bold uppercase text-[11px]">Dietary:</span>
+          <button 
+            v-for="diet in dietOptions" 
+            :key="diet.key"
+            @click="toggleDiet(diet.key)"
+            class="px-3 py-1 rounded-full border text-xs font-semibold transition"
+            :class="activeDiets.includes(diet.key) ? 'bg-[#1E3A2B] text-[#C9A55C] border-[#1E3A2B]' : 'bg-white border-[#1B1812]/15 text-[#1B1812] hover:border-[#1B1812]'"
+          >
+            {{ diet.label }}
           </button>
-          <button v-if="activeDiets.length > 0 || searchQuery || activeCategory !== 'all'"
-                  @click="resetFilters" class="text-xs text-[#896A39] hover:underline font-bold ml-auto">
-            Reset All Filters
+          <button 
+            v-if="activeDiets.length > 0 || searchQuery || activeCategory !== 'all'"
+            @click="resetFilters" 
+            class="text-xs text-[#DF4A2A] hover:underline font-bold ml-auto"
+          >
+            Reset Filters
           </button>
         </div>
       </div>
-    </div>
 
-    <!-- Menu Items Grid -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class="flex items-center justify-between mb-8">
-        <div>
-          <h2 class="text-2xl font-serif font-bold text-[#1B222C]">
-            {{ currentCategoryTitle }}
-          </h2>
-          <p class="text-xs text-stone-500 mt-1">Showing {{ filteredItems.length }} dishes</p>
-        </div>
-        <button @click="$emit('open-order')" class="px-5 py-2.5 rounded-full bg-[#896A39] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#6D5329] transition shadow-md">
-          Order Online Pickup
-        </button>
-      </div>
-
-      <!-- Dish Cards -->
-      <div v-if="filteredItems.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="item in filteredItems" :key="item.id"
-             class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-200 hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+      <!-- Menu Grid Content -->
+      <div>
+        <div class="flex items-center justify-between mb-6">
           <div>
-            <div class="relative h-56 overflow-hidden">
-              <img :src="item.image" :alt="item.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <span class="absolute top-4 left-4 bg-emerald-700 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
-                100% Seed Oil Free
-              </span>
-              <span class="absolute top-4 right-4 bg-white/95 backdrop-blur-md text-[#1B222C] font-serif font-bold text-base px-3 py-1 rounded-full shadow-sm">
-                {{ item.price }}
-              </span>
-            </div>
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-2">
-                <span class="bg-[#F7F1E6] text-[#896A39] border border-[#896A39]/30 text-[11px] font-bold px-2 py-0.5 rounded">
-                  {{ item.protein }} Protein
-                </span>
-                <span class="text-xs text-stone-400">{{ item.calories }} Cal</span>
-                <span v-if="item.dietary" class="ml-auto text-[10px] font-bold uppercase tracking-wider text-stone-500 bg-stone-100 px-2 py-0.5 rounded">
-                  {{ item.dietary }}
-                </span>
-              </div>
-              <h3 class="text-xl font-bold text-[#1B222C] font-serif group-hover:text-[#896A39] transition">
-                {{ item.name }}
-              </h3>
-              <p class="text-xs text-stone-600 mt-2 leading-relaxed">
-                {{ item.desc }}
-              </p>
-            </div>
+            <h2 class="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[#1B1812]">
+              {{ currentCategoryTitle }}
+            </h2>
+            <p class="text-xs font-mono text-[#1B1812]/60 mt-0.5">Showing {{ filteredItems.length }} dishes</p>
           </div>
-          <div class="p-6 pt-0">
-            <button @click="$emit('open-order')"
-                    class="w-full py-2.5 rounded-xl bg-[#1B222C] hover:bg-[#896A39] text-white font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-sm">
-              <Plus class="w-4 h-4" />
-              <span>Add to Pickup Order</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Empty State -->
-      <div v-else class="text-center py-20 space-y-4 bg-white rounded-3xl border border-stone-200">
-        <div class="w-16 h-16 mx-auto rounded-full bg-[#F7F1E6] flex items-center justify-center text-[#896A39]">
-          <Salad class="w-8 h-8" />
-        </div>
-        <h3 class="text-2xl font-serif font-bold text-[#1B222C]">No matching items found</h3>
-        <p class="text-stone-500 text-sm max-w-md mx-auto">
-          We couldn't find any dishes matching your current filter. Try resetting your search or choosing another category.
-        </p>
-        <button @click="resetFilters" class="px-6 py-2.5 rounded-full bg-[#896A39] text-white font-bold text-xs uppercase tracking-wider">
-          Reset All Filters
-        </button>
-      </div>
-    </main>
-
-    <!-- Bottom Express Order Bar -->
-    <section class="bg-[#F7F1E6] border-t border-[#896A39]/20 py-8">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h4 class="font-serif font-bold text-lg text-[#1B222C]">Need lunch fast in Midtown?</h4>
-          <p class="text-xs text-stone-600">Order online for grab-and-go counter pickup at 30 W 57th St (ready in 10-15 mins).</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <a href="tel:2126973334" class="px-5 py-2.5 rounded-full bg-white border border-stone-300 text-stone-700 font-bold text-xs hover:border-[#896A39] transition flex items-center gap-1.5">
-            <Phone class="w-3.5 h-3.5 text-[#896A39]" />
-            <span>(212) 697-3334</span>
-          </a>
-          <button @click="$emit('open-order')" class="px-6 py-2.5 rounded-full bg-[#896A39] hover:bg-[#6D5329] text-white font-bold text-xs uppercase tracking-wider shadow-md transition flex items-center gap-1.5">
-            <ShoppingBag class="w-3.5 h-3.5" />
-            <span>Start Pickup Order</span>
+          <button 
+            @click="cartActions.openCart()" 
+            class="px-5 py-2.5 rounded-full bg-[#DF4A2A] text-white font-display text-xs uppercase tracking-wider font-bold hover:bg-[#C53C1F] transition shadow-md"
+          >
+            View Order ({{ cartGetters.itemCount.value }})
           </button>
         </div>
+
+        <!-- No Results -->
+        <div v-if="filteredItems.length === 0" class="text-center py-20 bg-white rounded-3xl border border-[#1B1812]/10 space-y-3">
+          <span class="font-serif italic text-4xl text-[#DF4A2A]">No dishes found</span>
+          <p class="text-xs text-[#1B1812]/70 font-mono">Try searching with a different ingredient or clearing filters.</p>
+          <button @click="resetFilters" class="px-6 py-2 bg-[#1B1812] text-[#F4ECDD] text-xs font-display uppercase rounded-full">
+            Show All Dishes
+          </button>
+        </div>
+
+        <!-- Dish Cards Grid -->
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article 
+            v-for="dish in filteredItems" 
+            :key="dish.id"
+            class="ticket bg-white rounded-3xl p-5 border border-[#1B1812]/10 shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <!-- Dish Image Thumbnail -->
+              <button 
+                type="button" 
+                @click="cartActions.openDishModal(dish)"
+                class="w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#F4ECDD] relative group cursor-pointer"
+              >
+                <img 
+                  :src="dish.image" 
+                  :alt="dish.name"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span class="absolute top-2.5 right-2.5 bg-[#1B1812]/80 backdrop-blur-md text-[#F4ECDD] px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider">
+                  Quick View
+                </span>
+                <span v-if="dish.dietary" class="absolute bottom-2.5 left-2.5 bg-[#1E3A2B] text-[#C9A55C] px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider font-bold">
+                  {{ dish.dietary }}
+                </span>
+              </button>
+
+              <!-- Dish Info -->
+              <div class="mt-4">
+                <h3 class="font-display font-black text-2xl uppercase tracking-tight text-[#1E3A2B] leading-none">
+                  <button 
+                    type="button" 
+                    @click="cartActions.openDishModal(dish)"
+                    class="hover:text-[#DF4A2A] transition-colors text-left"
+                  >
+                    {{ dish.name }}
+                  </button>
+                </h3>
+                <p class="text-xs text-[#1B1812]/75 font-sans leading-relaxed mt-2 line-clamp-3">
+                  {{ dish.description }}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <!-- Perforated Tear Line -->
+              <div class="tear my-4"></div>
+
+              <!-- Price & Add Action -->
+              <div class="flex items-center justify-between pt-1">
+                <span class="font-mono text-2xl font-bold text-[#1B1812]">
+                  ${{ dish.price.toFixed(2) }}
+                </span>
+                <button 
+                  type="button"
+                  @click="cartActions.addItem(dish)"
+                  class="px-5 py-2 bg-[#DF4A2A] text-white text-xs font-display uppercase tracking-wider font-bold rounded-full hover:bg-[#C53C1F] transition-all shadow-sm flex items-center gap-1.5 transform hover:scale-105 active:scale-95"
+                >
+                  <span>Add +</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
-    </section>
+
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { Sparkles, Search, Plus, Salad, Phone, ShoppingBag } from 'lucide-vue-next';
+import { ref, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { cartActions, cartGetters } from '../stores/cart.js';
 
-defineEmits(['open-order']);
+const route = useRoute();
 
 const searchQuery = ref('');
 const activeCategory = ref('all');
@@ -166,154 +181,161 @@ const activeDiets = ref([]);
 
 const categories = [
   { id: 'all', name: 'All Dishes' },
-  { id: 'salads', name: 'Salads & Grain Bowls' },
-  { id: 'market', name: 'Hot Market Plates' },
-  { id: 'sandwiches', name: 'Sandwiches & Melts' },
-  { id: 'breakfast', name: 'Breakfast & Bakery' },
-  { id: 'drinks', name: 'Beverages & Coffee' }
+  { id: 'bowls', name: 'Market Bowls' },
+  { id: 'breakfast', name: 'Breakfast & Toasts' },
+  { id: 'sandwiches', name: 'Melts & Sandwiches' },
+  { id: 'juices', name: 'Juices & Smoothies' },
+  { id: 'bakery', name: 'Artisan Bakery' },
+  { id: 'soups', name: 'Scratch Soups' },
 ];
 
 const dietOptions = [
-  { key: 'gf', label: 'Gluten-Free' },
-  { key: 'vegan', label: 'Vegan' },
-  { key: 'protein', label: 'High Protein (30g+)' },
-  { key: 'df', label: 'Dairy-Free' }
+  { key: 'gf', label: '🌾 Gluten-Free' },
+  { key: 'vegan', label: '🌱 100% Plant-Based' },
+  { key: 'protein', label: '💪 High Protein' },
+  { key: 'dairy-free', label: '🥛 Dairy-Free' },
 ];
 
-const menuDatabase = [
+const menuItems = [
   {
     id: 1,
-    name: 'Tuscan Charred Steak Salad',
-    category: 'salads',
-    dietary: 'GF • High Protein',
-    dietKeys: ['gf', 'protein', 'df'],
-    price: '$17.95',
-    calories: 580,
-    protein: '42g',
-    image: '/assets/images/steak-salad.jpg',
-    desc: 'Grass-fed prime flank steak, wild baby arugula, shaved parmesan, heirloom cherry tomatoes, roasted pine nuts, 100% EVOO lemon balsamic glaze.'
+    name: 'Saffron Shrimp Bowl',
+    category: 'bowls',
+    price: 18.95,
+    image: '/menu/074.webp',
+    dietary: 'Gluten-Free',
+    tags: ['gf', 'protein', 'dairy-free'],
+    description: 'Saffron Vegetable Rice, Lemon Garlic Grilled Shrimp, Roasted Cauliflower, Lemon Zest Roasted Asparagus, Pickled Red Onions, Taro Root Chips, Chipotle Vinaigrette & Fresh Lemon.',
   },
   {
     id: 2,
-    name: 'Wild Salmon & Avocado Bowl',
-    category: 'salads',
-    dietary: 'GF • Omega-3',
-    dietKeys: ['gf', 'protein', 'df'],
-    price: '$18.50',
-    calories: 620,
-    protein: '38g',
-    image: '/assets/images/salmon-avocado.jpg',
-    desc: 'Pan-seared wild salmon cooked in avocado oil, organic tri-color quinoa, Hass avocado, massaged kale, Persian cucumber, lemon dill tahini.'
+    name: 'Classic Avocado Toast',
+    category: 'breakfast',
+    price: 9.50,
+    image: '/menu/003.webp',
+    dietary: 'Plant-Based',
+    tags: ['vegan', 'dairy-free'],
+    description: 'Smashed Hass Avocado, Herbed Cold-Pressed Extra Virgin Olive Oil, Organic Micro Greens & Watermelon Radish on artisanal bakery sourdough.',
   },
   {
     id: 3,
-    name: 'Roasted Harvest Grain Bowl',
-    category: 'salads',
-    dietary: 'Vegan • GF',
-    dietKeys: ['gf', 'vegan', 'df'],
-    price: '$14.95',
-    calories: 520,
-    protein: '18g',
-    image: '/assets/images/grain-bowl.jpg',
-    desc: 'Sweet potato cubes, charred Brussels sprouts, warm farro, organic baby spinach, roasted chickpeas, pumpkin seeds, maple EVOO dressing.'
+    name: 'Smoked Salmon Toast',
+    category: 'breakfast',
+    price: 14.95,
+    image: '/menu/043.webp',
+    dietary: 'High Protein',
+    tags: ['protein', 'dairy-free'],
+    description: 'Smashed Avocado, Wild Nova Smoked Salmon, Non-pareil Capers, Pickled Red Onions & Fresh Farm Dill on toasted sourdough.',
   },
   {
     id: 4,
-    name: 'Herb Grilled Chicken Market Plate',
-    category: 'market',
-    dietary: 'GF • High Protein',
-    dietKeys: ['gf', 'protein', 'df'],
-    price: '$16.95',
-    calories: 590,
-    protein: '46g',
-    image: '/assets/images/market-hot-table.jpg',
-    desc: 'Antibiotic-free lemon rosemary chicken breast, roasted garlic sweet potatoes, charred broccolini, steamed organic wild rice pilaf.'
+    name: 'Chicken Parm Melt',
+    category: 'sandwiches',
+    price: 13.95,
+    image: '/menu/095.webp',
+    dietary: 'Chef Favorite',
+    tags: ['protein'],
+    description: 'Crispy All-Natural Chicken Cutlet, Buffalo Mozzarella, Aged Parmesan Cheese, Homemade San Marzano Marinara Sauce on warm Artisan Ciabatta.',
   },
   {
     id: 5,
-    name: 'Braised Angus Beef Market Plate',
-    category: 'market',
-    dietary: 'GF • High Protein',
-    dietKeys: ['gf', 'protein'],
-    price: '$18.95',
-    calories: 660,
-    protein: '44g',
-    image: '/assets/images/hero-salad.webp',
-    desc: 'Slow-braised beef brisket in rich beef bone broth, roasted baby carrots, smashed red skin potatoes with grass-fed butter and fresh herbs.'
+    name: 'Metro Reuben',
+    category: 'sandwiches',
+    price: 15.95,
+    image: '/menu/099.webp',
+    dietary: 'NYC Classic',
+    tags: ['protein'],
+    description: 'House Corned Beef, Whole Grain Mustard, Russian Dressing, Tangy Sauerkraut, Melted Swiss Cheese on Griddled Sourdough.',
   },
   {
     id: 6,
-    name: 'Artisan Turkey & Bacon Avocado Club',
-    category: 'sandwiches',
-    dietary: 'High Protein',
-    dietKeys: ['protein'],
-    price: '$14.95',
-    calories: 610,
-    protein: '36g',
-    image: '/assets/images/artisan-sandwich.jpg',
-    desc: 'House-roasted turkey breast, nitrate-free applewood bacon, smashed avocado, vine tomatoes, bibb lettuce, seed-oil-free garlic aioli on sourdough.'
+    name: 'Sunfire Shrimp Salad',
+    category: 'bowls',
+    price: 18.95,
+    image: '/menu/073.webp',
+    dietary: 'Gluten-Free',
+    tags: ['gf', 'protein', 'dairy-free'],
+    description: 'Crisp Mixed Greens, Shaved Cabbage, Spicy Pineapple Pico de Gallo, Roasted Corn, Shredded Parsnips, Taro Root Chips, Grilled Lemon Garlic Shrimp, Chipotle Vinaigrette.',
   },
   {
     id: 7,
-    name: 'Pasture Egg & Truffle Breakfast Brioche',
-    category: 'breakfast',
-    dietary: 'Vegetarian',
-    dietKeys: ['protein'],
-    price: '$9.95',
-    calories: 460,
-    protein: '22g',
-    image: '/assets/images/breakfast-sandwich.jpg',
-    desc: 'Soft scrambled pasture-raised eggs, aged cheddar, caramelized shallots, wild truffle EVOO on warm artisanal French brioche.'
+    name: 'Green Glow Cold-Pressed Juice',
+    category: 'juices',
+    price: 10.50,
+    image: '/menu/147.webp',
+    dietary: 'Cold-Pressed',
+    tags: ['vegan', 'gf', 'dairy-free'],
+    description: 'Cold-Pressed Organic Tuscan Kale, Baby Spinach, Crisp Green Apple, Pineapple, Valencia Oranges, and Fresh Crushed Ginger.',
   },
   {
     id: 8,
-    name: 'Fresh French Bakery Croissant',
-    category: 'breakfast',
-    dietary: 'Vegetarian',
-    dietKeys: [],
-    price: '$4.75',
-    calories: 320,
-    protein: '7g',
-    image: '/assets/images/croissant-bakery.jpg',
-    desc: 'Laminated with pure European grass-fed butter, crisp golden layers, delicate buttery crumb baked fresh every morning in Midtown.'
+    name: 'Hand-Rolled Almond Croissant',
+    category: 'bakery',
+    price: 5.95,
+    image: '/menu/020.webp',
+    dietary: 'Bakery Fresh',
+    tags: [],
+    description: 'Hand-rolled Parisian flaky butter croissant layered with rich almond cream paste and topped with toasted sliced almonds.',
   },
   {
     id: 9,
-    name: 'Artisanal Pistachio Iced Latte',
-    category: 'drinks',
-    dietary: 'Gluten-Free',
-    dietKeys: ['gf'],
-    price: '$6.50',
-    calories: 180,
-    protein: '6g',
-    image: '/assets/images/specialty-coffee.jpg',
-    desc: 'Double shot of single-origin espresso, house-ground Sicilian pistachio milk, raw organic honey, served over hand-cut ice.'
+    name: 'Chicken Fajita Melt',
+    category: 'sandwiches',
+    price: 14.25,
+    image: '/menu/072.webp',
+    dietary: 'High Protein',
+    tags: ['protein'],
+    description: 'Cajun Spiced Chicken, Spicy Pineapple Pico de Gallo, Fire-Grilled Peppers & Onions, Monterey Jack & Sharp Cheddar on Pita with fresh guacamole.',
   },
   {
     id: 10,
-    name: 'Green Vitality Cold-Pressed Juice',
-    category: 'drinks',
-    dietary: 'Vegan • GF • Raw',
-    dietKeys: ['gf', 'vegan', 'df'],
-    price: '$8.50',
-    calories: 110,
-    protein: '3g',
-    image: '/assets/images/cold-pressed-juice.jpg',
-    desc: 'Cold-pressed organic kale, crisp green apple, English cucumber, celery, fresh ginger root, and Persian lime. Zero added sugar.'
-  }
+    name: 'Wild Berry Smoothie',
+    category: 'juices',
+    price: 10.95,
+    image: '/menu/155.webp',
+    dietary: 'No Added Sugar',
+    tags: ['gf'],
+    description: 'Fresh Strawberries, Blueberries, Blackberries, House-Made Gluten-Free Granola, and Organic Greek Yogurt blended to order.',
+  },
+  {
+    id: 11,
+    name: 'Simmering Bone Broth & Lentil Soup',
+    category: 'soups',
+    price: 8.95,
+    image: '/menu/111.webp',
+    dietary: 'Scratch Made',
+    tags: ['gf', 'dairy-free'],
+    description: 'Simmered all day with grass-fed bone broth, French green lentils, mirepoix vegetables, rosemary, and cold-pressed olive oil.',
+  },
+  {
+    id: 12,
+    name: 'Grass-Fed Steak Market Plate',
+    category: 'bowls',
+    price: 19.95,
+    image: '/ig/03.webp',
+    dietary: 'High Protein',
+    tags: ['protein', 'gf', 'dairy-free'],
+    description: 'Charred Flank Steak sliced thin over saffron rice, roasted sweet potato wedges, charred broccoli, and chimichurri olive oil sauce.',
+  },
 ];
 
+onMounted(() => {
+  if (route.query.cat) {
+    activeCategory.value = route.query.cat;
+  }
+});
+
 function countCategory(catId) {
-  if (catId === 'all') return menuDatabase.length;
-  return menuDatabase.filter(item => item.category === catId).length;
+  if (catId === 'all') return menuItems.length;
+  return menuItems.filter(item => item.category === catId).length;
 }
 
-function toggleDiet(key) {
-  const index = activeDiets.value.indexOf(key);
-  if (index >= 0) {
-    activeDiets.value.splice(index, 1);
+function toggleDiet(dietKey) {
+  const idx = activeDiets.value.indexOf(dietKey);
+  if (idx > -1) {
+    activeDiets.value.splice(idx, 1);
   } else {
-    activeDiets.value.push(key);
+    activeDiets.value.push(dietKey);
   }
 }
 
@@ -329,24 +351,27 @@ const currentCategoryTitle = computed(() => {
 });
 
 const filteredItems = computed(() => {
-  return menuDatabase.filter(item => {
+  return menuItems.filter(dish => {
     // Category match
-    if (activeCategory.value !== 'all' && item.category !== activeCategory.value) {
+    if (activeCategory.value !== 'all' && dish.category !== activeCategory.value) {
       return false;
     }
+
+    // Dietary match
+    if (activeDiets.value.length > 0) {
+      const hasAll = activeDiets.value.every(d => dish.tags && dish.tags.includes(d));
+      if (!hasAll) return false;
+    }
+
     // Search query match
-    if (searchQuery.value) {
+    if (searchQuery.value.trim()) {
       const q = searchQuery.value.toLowerCase();
-      const matchName = item.name.toLowerCase().includes(q);
-      const matchDesc = item.desc.toLowerCase().includes(q);
-      const matchDiet = item.dietary?.toLowerCase().includes(q);
+      const matchName = dish.name.toLowerCase().includes(q);
+      const matchDesc = dish.description.toLowerCase().includes(q);
+      const matchDiet = dish.dietary ? dish.dietary.toLowerCase().includes(q) : false;
       if (!matchName && !matchDesc && !matchDiet) return false;
     }
-    // Diet filters match
-    if (activeDiets.value.length > 0) {
-      const hasAllDiets = activeDiets.value.every(d => item.dietKeys.includes(d));
-      if (!hasAllDiets) return false;
-    }
+
     return true;
   });
 });

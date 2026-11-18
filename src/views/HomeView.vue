@@ -1,68 +1,69 @@
 <template>
-  <div>
-    <!-- Hero Section -->
-    <Hero @open-order="$emit('open-order')" />
+  <div class="space-y-0 pb-16 md:pb-0">
+    <!-- Hero 3 Elevated -->
+    <Hero />
 
-    <!-- Stats Counter Bar -->
-    <section class="bg-white border-y border-stone-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div class="space-y-1">
-            <div class="text-3xl sm:text-4xl font-serif font-extrabold text-[#896A39]">100%</div>
-            <div class="text-xs sm:text-sm font-bold uppercase tracking-wider text-stone-500">Seed Oil Free Kitchen</div>
-          </div>
-          <div class="space-y-1">
-            <div class="text-3xl sm:text-4xl font-serif font-extrabold text-[#1B222C]">500k+</div>
-            <div class="text-xs sm:text-sm font-bold uppercase tracking-wider text-stone-500">Midtown Meals Served</div>
-          </div>
-          <div class="space-y-1">
-            <div class="text-3xl sm:text-4xl font-serif font-extrabold text-[#896A39]">15 Min</div>
-            <div class="text-xs sm:text-sm font-bold uppercase tracking-wider text-stone-500">Average Express Pickup</div>
-          </div>
-          <div class="space-y-1">
-            <div class="text-3xl sm:text-4xl font-serif font-extrabold text-[#1B222C]">30 W 57th</div>
-            <div class="text-xs sm:text-sm font-bold uppercase tracking-wider text-stone-500">Steps From Central Park</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Ticker 1: Primary Tomato -->
+    <MarqueeTicker />
 
-    <!-- 100% Seed Oil Free Philosophy -->
+    <!-- 100% Seed Oil Free Philosophy (Scalloped Dark Green) -->
     <SeedOilSection />
 
-    <!-- Interactive Market Table Plate Builder -->
-    <MarketTableBuilder @open-order="$emit('open-order')" />
+    <!-- Welcome Story & Midtown Fuel -->
+    <WelcomeStory />
 
-    <!-- Chef Curated Menu Highlights -->
-    <MenuHighlights @open-order="$emit('open-order')" />
+    <!-- Signature Plates (Perforated Deli Tickets) -->
+    <SignaturePlates />
 
-    <!-- Corporate Catering & Live Budget Estimator -->
-    <CateringEstimator @open-catering="$emit('open-catering')" />
+    <!-- Ticker 2: Antique Gold -->
+    <MarqueeTicker 
+      variant="gold"
+      :items="[
+        'Seed Oil Free',
+        'Made From Scratch',
+        'Woman-Owned NYC',
+        'We Do Not Chop Salads',
+        'Your Way, Everyday',
+        'Fresh, Fast & Made for Midtown',
+        '30 W 57th St',
+        'Right Off Central Park West'
+      ]"
+    />
 
-    <!-- Metro Rewards App Showcase -->
-    <RewardsApp />
+    <!-- Bento Grid Category Moments -->
+    <BentoCategories />
 
-    <!-- Google Reviews & Social Proof -->
-    <GoogleReviews />
+    <!-- 3-Step Custom Build Bowl Section -->
+    <BuildSection />
 
-    <!-- Location, Transit & Store Hours -->
-    <LocationTransit @open-order="$emit('open-order')" />
+    <!-- Corporate Catering Showcase with Live Budget Estimator -->
+    <CateringShowcase />
 
-    <!-- Newsletter Bar -->
-    <NewsletterBar @subscribed="$emit('toast', 'Welcome to Metro Marché! Check your email for $5 promo code.')" />
+    <!-- Rewards Club Showcase -->
+    <RewardsClub />
+
+    <!-- Google Reviews & Verified Diner Proof -->
+    <GoogleReviewsSection />
+
+    <!-- Real Instagram Community Grid -->
+    <InstagramGrid />
+
+    <!-- Storefront, Hours & Midtown Subway Map -->
+    <StorefrontSection />
   </div>
 </template>
 
 <script setup>
 import Hero from '../components/Hero.vue';
+import MarqueeTicker from '../components/MarqueeTicker.vue';
 import SeedOilSection from '../components/SeedOilSection.vue';
-import MarketTableBuilder from '../components/MarketTableBuilder.vue';
-import MenuHighlights from '../components/MenuHighlights.vue';
-import CateringEstimator from '../components/CateringEstimator.vue';
-import RewardsApp from '../components/RewardsApp.vue';
-import GoogleReviews from '../components/GoogleReviews.vue';
-import LocationTransit from '../components/LocationTransit.vue';
-import NewsletterBar from '../components/NewsletterBar.vue';
-
-defineEmits(['open-order', 'open-catering', 'toast']);
+import WelcomeStory from '../components/WelcomeStory.vue';
+import SignaturePlates from '../components/SignaturePlates.vue';
+import BentoCategories from '../components/BentoCategories.vue';
+import BuildSection from '../components/BuildSection.vue';
+import CateringShowcase from '../components/CateringShowcase.vue';
+import RewardsClub from '../components/RewardsClub.vue';
+import GoogleReviewsSection from '../components/GoogleReviewsSection.vue';
+import InstagramGrid from '../components/InstagramGrid.vue';
+import StorefrontSection from '../components/StorefrontSection.vue';
 </script>

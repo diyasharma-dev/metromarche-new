@@ -1,176 +1,384 @@
-/* Metro Marché — Vue 3 Redesign Styling
-   Strictly following the Metro Marché Logo Color Pattern:
-   - Antique Bronze Gold: #896A39
-   - Deep Midnight Charcoal: #1B222C
-   - Parisian Slate: #69707B
-   - French Celadon Sage: #9BC3CA
-   - Warm Terracotta: #DF9F83 / #F4A074
-   - Warm French Cream: #FAF8F5 / #F3ECE1
+/* Metro Marché — Master Design System
+   Inspired by & Elevated Above https://metromarche.mirchmedia01.workers.dev/
+   Fonts: Archivo (Display), Instrument Serif (Script/Serif), DM Sans (Sans), DM Mono (Mono)
+   Colors: French Parchment Cream, Bistro Noir, Dark Green, Antique Gold, Electric Tomato, Saffron
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..900;1,400..900&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Instrument+Serif:ital@0;1&display=swap');
 
 :root {
-  --color-bronze: #896A39;
-  --color-bronze-dark: #6D5329;
-  --color-bronze-light: #F7F1E6;
-  --color-charcoal: #1B222C;
-  --color-charcoal-dark: #10161D;
-  --color-slate: #69707B;
-  --color-celadon: #9BC3CA;
-  --color-terracotta: #DF9F83;
-  --color-cream: #FAF8F5;
-  --color-oat: #F3ECE1;
-  --color-border: #E5E8EB;
+  --cream: #F4ECDD;
+  --cream-2: #EFE4D0;
+  --cream-3: #E5D8C0;
+  --ink: #1B1812;
+  --ink-2: #2A241C;
+  --ink-dark: #10161D;
+  --green: #1E3A2B;
+  --green-dark: #13271C;
+  --green-light: #2D543F;
+  --gold: #C9A55C;
+  --gold-hover: #B08E46;
+  --tomato: #DF4A2A;
+  --tomato-hover: #C53C1F;
+  --saffron: #E2962B;
+  --bronze: #896A39;
+  --white: #FFFFFF;
+  
+  --font-display: 'Archivo', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --pad: clamp(16px, 3.5vw, 44px);
+  --nav: 82px;
 }
 
+/* Global Reset & Base */
 html {
   scroll-behavior: smooth;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  color: var(--color-charcoal);
-  background-color: var(--color-cream);
+  font-family: var(--font-sans);
+  background-color: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* Typography Classes */
+.font-display {
+  font-family: var(--font-display);
 }
 
 .font-serif {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-serif);
 }
 
 .font-sans {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 
-/* Custom Gradients */
-.bg-noir-gradient {
-  background: linear-gradient(135deg, #10161D 0%, #1B222C 50%, #242D3A 100%);
+.font-mono {
+  font-family: var(--font-mono);
 }
 
-.bg-bronze-gradient {
-  background: linear-gradient(135deg, #896A39 0%, #A48047 50%, #896A39 100%);
+.disp {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-stretch: 75%;
+  letter-spacing: -0.02em;
 }
 
-.text-gold-gradient {
-  background: linear-gradient(135deg, #D4AF37 0%, #F3DF9A 50%, #C59B27 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.script {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
 }
 
-/* Glassmorphism */
-.bg-glass {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* Scalloped Borders */
+.scal-t {
+  position: relative;
+}
+.scal-t:before {
+  content: "";
+  background: radial-gradient(circle at 22px 0, var(--cream) 21px, transparent 22px) 0 0/44px 22px repeat-x;
+  height: 22px;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
-.bg-glass-dark {
-  background: rgba(27, 34, 44, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+.scal-b {
+  position: relative;
+}
+.scal-b:after {
+  content: "";
+  background: radial-gradient(circle at 22px 0, var(--green) 21px, transparent 22px) 0 0/44px 22px repeat-x;
+  height: 22px;
+  position: absolute;
+  bottom: -21px;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
 
-/* Soft Shadows */
-.shadow-soft {
-  box-shadow: 0 10px 30px -10px rgba(27, 34, 44, 0.08), 0 4px 12px -2px rgba(27, 34, 44, 0.04);
+/* Marquee Tickers */
+.marq {
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--tomato);
+  color: var(--cream);
+  user-select: none;
+  border-top: 1px solid rgba(27, 24, 18, 0.12);
+  border-bottom: 1px solid rgba(27, 24, 18, 0.12);
+}
+.marq.dark {
+  background: var(--ink);
+  color: var(--cream);
+}
+.marq.gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+.marq.green {
+  background: var(--green);
+  color: var(--cream);
 }
 
-.shadow-card-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.shadow-card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -12px rgba(137, 106, 57, 0.18), 0 8px 16px -4px rgba(27, 34, 44, 0.08);
+.marq-t {
+  display: inline-flex;
+  padding: 13px 0;
+  animation: marquee 34s linear infinite;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+.marq-t span {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2em;
+  padding: 0 0.8em;
+  font-size: clamp(18px, 2.2vw, 28px);
+  letter-spacing: 0.04em;
 }
-::-webkit-scrollbar-track {
-  background: #F3ECE1;
+
+.marq-t span:after {
+  content: "✺";
+  color: var(--cream);
+  opacity: 0.8;
+  font-size: 0.8em;
 }
-::-webkit-scrollbar-thumb {
-  background: #896A39;
+
+.marq.gold .marq-t span:after {
+  color: var(--green);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Rotating Stamp Badge */
+.badge-spin {
+  animation: spinBadge 24s linear infinite;
+}
+
+@keyframes spinBadge {
+  to { transform: rotate(360deg); }
+}
+
+/* Floating Animation */
+@keyframes dishFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+.animate-dish-float {
+  animation: dishFloat 7s ease-in-out infinite;
+}
+
+/* Polaroids */
+.polaroid {
+  background: #ffffff;
+  padding: 8px 8px 24px;
+  box-shadow: 0 16px 36px rgba(27, 24, 18, 0.24);
   border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #6D5329;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* Dietary & Quality Badges */
-.badge-seedoil {
-  background-color: #F7F1E6;
-  color: #896A39;
-  border: 1px solid #E6D8BE;
+.polaroid:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+  box-shadow: 0 24px 50px rgba(27, 24, 18, 0.35);
+  z-index: 10;
 }
 
-.badge-gf {
-  background-color: #FEF3C7;
-  color: #92400E;
-  border: 1px solid #FDE68A;
+.polaroid img {
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  width: 100%;
+  display: block;
 }
 
-.badge-vegan {
-  background-color: #F0FDF4;
-  color: #166534;
-  border: 1px solid #BBF7D0;
+/* Ticket Receipts */
+.ticket {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 12px 30px rgba(27, 24, 18, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(27, 24, 18, 0.06);
 }
 
-.badge-protein {
-  background-color: #F0F7F9;
-  color: #2F6575;
-  border: 1px solid #C5E0E7;
+.ticket:nth-child(odd) {
+  transform: rotate(-1deg);
 }
 
-/* Float Animation */
-@keyframes floatGentle {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+.ticket:nth-child(even) {
+  transform: rotate(0.8deg);
 }
 
-.animate-float {
-  animation: floatGentle 5s ease-in-out infinite;
+.ticket:hover {
+  transform: translateY(-6px) rotate(0deg) !important;
+  box-shadow: 0 20px 42px rgba(27, 24, 18, 0.14);
 }
 
-/* Pulse Glow */
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.12);
-  }
+.ticket .tear {
+  border-top: 2px dashed rgba(27, 24, 18, 0.25);
+  margin: 16px -18px 14px;
+  position: relative;
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 2s infinite ease-in-out;
+.ticket .tear:before,
+.ticket .tear:after {
+  content: "";
+  background: var(--cream);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -11px;
 }
 
-/* Hide scrollbar utility */
+.ticket .tear:before {
+  left: -10px;
+}
+
+.ticket .tear:after {
+  right: -10px;
+}
+
+/* Bento Category Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.bento-tile {
+  min-height: 290px;
+  border-radius: 26px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  isolation: isolate;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+}
+
+.bento-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 36px rgba(27, 24, 18, 0.18);
+}
+
+.bento-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-tile:hover img {
+  transform: scale(1.06);
+}
+
+.bento-tile:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(14, 38, 28, 0.94) 0%, rgba(14, 38, 28, 0.45) 50%, transparent 100%);
+  z-index: -1;
+}
+
+.bento-tile.light-tile:after {
+  background: linear-gradient(to top, rgba(244, 236, 221, 0.95) 0%, rgba(244, 236, 221, 0.4) 50%, transparent 100%);
+}
+
+/* Polygonal 3-Step Build Cards */
+.step-card {
+  background: var(--green);
+  color: var(--cream);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 38px), calc(100% - 38px) 100%, 0 100%);
+  border-radius: 26px;
+  min-height: 220px;
+  padding: 26px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Pulsing NYC Status Dot */
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(61, 220, 132, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0); }
+}
+
+.dot-pulse {
+  background: #3DDC84;
+  border-radius: 50%;
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  animation: pulseDot 2s infinite;
+}
+
+/* Sticker Button */
+.sticker-btn {
+  aspect-ratio: 1;
+  background: var(--tomato);
+  color: #ffffff;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  line-height: 0.95;
+  box-shadow: 0 0 0 5px var(--cream), 0 0 0 7px var(--tomato), 0 16px 32px rgba(223, 74, 42, 0.35);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.sticker-btn:hover {
+  transform: rotate(-4deg) scale(1.08) !important;
+}
+
+/* Cart Button Pop Animation */
+@keyframes cartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.animate-pop {
+  animation: cartPop 0.35s ease-out;
+}
+
+/* Custom Scrollbar for horizontal scrollers */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-/* Vue Transitions */
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-}
-
-.scale-enter-active, .scale-leave-active {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.scale-enter-from, .scale-leave-to {
-  opacity: 0;
-  transform: scale(0.95);
 }
